@@ -1,0 +1,54 @@
+{
+  "name": "Lekcija",
+  "type": "object",
+  "properties": {
+    "cjelina_id": {
+      "type": "string"
+    },
+    "naziv": {
+      "type": "string"
+    },
+    "sazetak": {
+      "type": "string"
+    },
+    "redoslijed": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "cjelina_id",
+    "naziv"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "Dodjela",
+  "type": "object",
+  "properties": {
+    "ucenik_email": {
+      "type": "string"
+    },
+    "ucenik_ime": {
+      "type": "string"
+    },
+    "tip": {
+      "type": "string",
+      "enum": [
+        "Lekcija",
+        "Doma\u0107a zada\u0107a",
+        "Ispit znanja"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "yellow"
+      ]
+    },
+    "cjelina_id": {
+      "type": "string"
+    },
+    "lekcija_id": {
+      "type": "string"
+    },
+    "materijal_id": {
+      "type": "string"
+    },
+    "ispit_id": {
+      "type": "string"
+    },
+    "rok": {
+      "type": "string"
+    },
+    "napomena": {
+      "type": "string"
+    },
+    "grupa_id": {
+      "type": "string"
+    },
+    "grupa_naziv": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "ucenik_email",
+    "tip"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.ucenik_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

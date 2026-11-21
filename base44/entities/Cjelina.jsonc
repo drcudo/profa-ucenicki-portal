@@ -1,0 +1,66 @@
+{
+  "name": "Cjelina",
+  "type": "object",
+  "properties": {
+    "naziv": {
+      "type": "string"
+    },
+    "opis": {
+      "type": "string"
+    },
+    "razina": {
+      "type": "string",
+      "enum": [
+        "A razina",
+        "B razina",
+        "Nacionalni ispit",
+        "Individualne instrukcije"
+      ],
+      "enumColors": [
+        "purple",
+        "blue",
+        "green",
+        "yellow"
+      ],
+      "default": "A razina"
+    },
+    "redoslijed": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "naziv"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

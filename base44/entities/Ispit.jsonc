@@ -1,0 +1,69 @@
+{
+  "name": "Ispit",
+  "type": "object",
+  "properties": {
+    "cjelina_id": {
+      "type": "string"
+    },
+    "naziv": {
+      "type": "string"
+    },
+    "opis": {
+      "type": "string"
+    },
+    "sadrzaj": {
+      "type": "string"
+    },
+    "file_uri": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "rok": {
+      "type": "string"
+    },
+    "vremensko_ogranicenje": {
+      "type": "number"
+    },
+    "maks_bodovi": {
+      "type": "number",
+      "default": 50
+    }
+  },
+  "required": [
+    "cjelina_id",
+    "naziv"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

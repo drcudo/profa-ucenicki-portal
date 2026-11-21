@@ -1,0 +1,70 @@
+{
+  "name": "Grupa",
+  "type": "object",
+  "properties": {
+    "naziv": {
+      "type": "string"
+    },
+    "nacin": {
+      "type": "string",
+      "enum": [
+        "Ru\u010dno",
+        "Po razini"
+      ],
+      "enumColors": [
+        "blue",
+        "purple"
+      ],
+      "default": "Ru\u010dno"
+    },
+    "razina": {
+      "type": "string",
+      "enum": [
+        "A razina",
+        "B razina",
+        "Nacionalni ispit",
+        "Individualne instrukcije"
+      ],
+      "enumColors": [
+        "purple",
+        "blue",
+        "green",
+        "yellow"
+      ]
+    },
+    "clanovi": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "opis": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "naziv"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

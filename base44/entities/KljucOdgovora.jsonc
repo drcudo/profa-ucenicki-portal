@@ -1,0 +1,43 @@
+{
+  "name": "KljucOdgovora",
+  "type": "object",
+  "properties": {
+    "materijal_id": {
+      "type": "string"
+    },
+    "ispit_id": {
+      "type": "string"
+    },
+    "tekst": {
+      "type": "string"
+    },
+    "file_uri": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

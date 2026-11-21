@@ -1,0 +1,113 @@
+{
+  "name": "Predaja",
+  "type": "object",
+  "properties": {
+    "ucenik_email": {
+      "type": "string"
+    },
+    "ucenik_ime": {
+      "type": "string"
+    },
+    "naziv": {
+      "type": "string"
+    },
+    "materijal_id": {
+      "type": "string"
+    },
+    "lekcija_id": {
+      "type": "string"
+    },
+    "cjelina_id": {
+      "type": "string"
+    },
+    "tekst_odgovora": {
+      "type": "string"
+    },
+    "datoteke": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "AI pregledava",
+        "Potreban ispravak",
+        "Prihva\u0107eno"
+      ],
+      "enumColors": [
+        "blue",
+        "yellow",
+        "green"
+      ]
+    },
+    "ai_izvjesce": {
+      "type": "string"
+    },
+    "ai_tocno": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ai_greske": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "bodovi": {
+      "type": "number"
+    },
+    "maks_bodovi": {
+      "type": "number"
+    },
+    "pokusaj": {
+      "type": "number",
+      "default": 1
+    },
+    "nastavnicka_napomena": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "ucenik_email",
+    "materijal_id",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.ucenik_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "data.ucenik_email": "{{user.email}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "data.ucenik_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

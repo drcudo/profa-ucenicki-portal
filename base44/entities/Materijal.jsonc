@@ -1,0 +1,77 @@
+{
+  "name": "Materijal",
+  "type": "object",
+  "properties": {
+    "lekcija_id": {
+      "type": "string"
+    },
+    "cjelina_id": {
+      "type": "string"
+    },
+    "naziv": {
+      "type": "string"
+    },
+    "kategorija": {
+      "type": "string",
+      "enum": [
+        "Za predavanje",
+        "Doma\u0107a zada\u0107a",
+        "Dodatni listi\u0107i i zadaci"
+      ],
+      "enumColors": [
+        "blue",
+        "purple",
+        "yellow"
+      ]
+    },
+    "sadrzaj": {
+      "type": "string"
+    },
+    "file_uri": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "redoslijed": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "lekcija_id",
+    "naziv",
+    "kategorija"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
