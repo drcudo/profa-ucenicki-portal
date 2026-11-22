@@ -29,7 +29,7 @@ import Predaje from '@/pages/dashboard/Predaje';
 import Grupe from '@/pages/dashboard/Grupe';
 
 const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, checkUserAuth } = useAuth();
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
@@ -42,6 +42,25 @@ const AuthenticatedApp = () => {
   if (authError && authError.type === 'auth_required') {
     navigateToLogin();
     return null;
+  }
+
+  if (authError?.type === 'auth_error') {
+    return (
+      <div className="grid min-h-screen place-items-center p-6">
+        <div className="max-w-md text-center">
+          <p role="alert" className="text-sm text-destructive">
+            {authError.message}
+          </p>
+          <button
+            type="button"
+            onClick={checkUserAuth}
+            className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
+          >
+            Pokušaj ponovno
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
