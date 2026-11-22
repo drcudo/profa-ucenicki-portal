@@ -61,8 +61,15 @@ export default function MaterialDialog({ open, onClose, lekcija, cjelinaId, mate
       }
       onSaved();
       onClose();
-    } catch {
-      setError('Spremanje nije uspjelo.');
+    } catch (saveError) {
+      const status = saveError?.status ?? saveError?.statusCode ?? saveError?.response?.status;
+      if (status === 401) {
+        setError('Prijava je istekla. Prijavite se ponovno i pokušajte spremiti materijal.');
+      } else if (status === 403) {
+        setError('Ovaj račun nema ovlasti za unos gradiva. Prijavite se administratorskim računom.');
+      } else {
+        setError(saveError?.message || 'Spremanje nije uspjelo.');
+      }
     } finally {
       setSaving(false);
     }
