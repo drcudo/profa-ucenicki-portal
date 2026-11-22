@@ -15,6 +15,7 @@ import { RAZINE, razinaOf } from '@/lib/razine';
 
 export default function Upravljanje() {
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [version, setVersion] = useState(0);
   const [cjeline, setCjeline] = useState([]);
   const [lekcije, setLekcije] = useState([]);
@@ -37,7 +38,8 @@ export default function Upravljanje() {
     let alive = true;
     const load = async () => {
       setLoading(true);
-      const [units, lessons, mats, keys, exams] = await Promise.all([
+      setLoadError('');
+      const results = await Promise.allSettled([
         base44.entities.Cjelina.list(),
         base44.entities.Lekcija.list(),
         base44.entities.Materijal.list(),
@@ -45,11 +47,22 @@ export default function Upravljanje() {
         base44.entities.Ispit.list(),
       ]);
       if (!alive) return;
+
+      const [units, lessons, mats, keys, exams] = results.map((result) => {
+        if (result.status === 'rejected') return [];
+        const value = result.value;
+        return Array.isArray(value) ? value : (value?.items ?? []);
+      });
+      const failed = results.some((result) => result.status === 'rejected');
+      if (!alive) return;
       setCjeline(sortByOrder(units));
       setLekcije(sortByOrder(lessons));
       setMaterijali(sortByOrder(mats));
       setKljucevi(keys);
       setIspiti(sortByOrder(exams));
+      if (failed) {
+        setLoadError('Dio podataka nije uspio učitati. Pokušajte osvježiti stranicu.');
+      }
       setLoading(false);
     };
     load();
@@ -116,6 +129,12 @@ export default function Upravljanje() {
       <div className="mb-4">
         <RazinaTabs value={razina} onChange={setRazina} />
       </div>
+
+      {loadError && (
+        <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {loadError}
+        </div>
+      )}
 
       {loading ? (
         <div className="grid place-items-center py-20 text-muted-foreground">
